@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devteam.biblioteca.domain.exception.EntidadeNaoEncontradaException;
+import com.devteam.biblioteca.domain.exception.NegocioException;
 import com.devteam.biblioteca.domain.model.Autor;
 import com.devteam.biblioteca.dto.assembler.AutorModelAssembler;
 import com.devteam.biblioteca.dto.disassembler.AutorInputDisassembler;
@@ -64,9 +66,14 @@ public class AutorController {
 	
 	@PutMapping("/{id}")
 	public AutorModel update(@PathVariable Long id, @RequestBody @Valid AutorInput autorInput) {
+		try {
 		Autor autorDomain = autorServ.findOrFailById(id);
 		autorInputDissb.copyInputToDomainProperties(autorInput, autorDomain);
 		return autorModelAssb.entityToModel(autorServ.insert(autorDomain));
+		}
+		catch(EntidadeNaoEncontradaException ex) {
+			throw new NegocioException(ex.getMessage());
+		}
 	}
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
