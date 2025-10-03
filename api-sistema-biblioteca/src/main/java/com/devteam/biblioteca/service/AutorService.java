@@ -20,6 +20,7 @@ public class AutorService {
 	
 	@Transactional
 	public Autor insert(Autor autor) {
+		autor.ativar();
 		return autorRepository.save(autor);
 	}
 	
@@ -34,6 +35,17 @@ public class AutorService {
 		catch(DataIntegrityViolationException ex) {
 			throw new AutorEmUsoException(id);
 		}
+	}
+	
+	
+	@Transactional
+	public void ativar(Autor autor) {
+		autor.ativar();
+	}
+	
+	@Transactional
+	public void desativar(Autor autor) {
+		autor.desativar();
 	}
 	
 	public Autor findOrFailById(Long id) {

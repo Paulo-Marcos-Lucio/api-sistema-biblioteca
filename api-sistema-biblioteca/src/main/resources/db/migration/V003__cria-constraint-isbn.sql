@@ -1,0 +1,1 @@
+ALTER TABLE tblivro ADD CONSTRAINT uk_livro_isbn UNIQUE (isbn);

@@ -14,12 +14,12 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ================================================
 -- POPULAÇÃO DE AUTORES
 -- ================================================
-INSERT INTO tbautor (nome) VALUES
-('Machado de Assis'),
-('Clarice Lispector'),
-('Jorge Amado'),
-('Graciliano Ramos'),
-('José Saramago');
+INSERT INTO tbautor (nome, ativo) VALUES
+('Machado de Assis', TRUE),
+('Clarice Lispector', FALSE),
+('Jorge Amado', TRUE),
+('Graciliano Ramos', FALSE),
+('José Saramago', TRUE);
 
 -- ================================================
 -- POPULAÇÃO DE USUÁRIOS

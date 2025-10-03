@@ -22,4 +22,25 @@ public class Autor {
 	
 	@Column(nullable = false)
 	private String nome;
+	
+	private Boolean ativo;
+	
+	
+	public void ativar() {
+		this.ativo = true;
+	}
+	
+	public void desativar() {
+		this.ativo = false;
+	}
+	
+	
+	public Boolean isAtivo() {
+		return Boolean.TRUE.equals(this.ativo);
+	}
+	
+	
+	public Boolean isInativo() {
+		return Boolean.FALSE.equals(this.ativo);
+	}
 }
