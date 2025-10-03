@@ -60,7 +60,7 @@ public class LivroController {
 	}
 	
 	
-	
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public LivroModel insert(@RequestBody @Valid LivroInput livroInput) {
 		try {

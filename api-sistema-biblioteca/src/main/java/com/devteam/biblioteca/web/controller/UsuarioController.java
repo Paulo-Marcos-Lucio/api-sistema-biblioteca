@@ -59,6 +59,7 @@ public class UsuarioController {
 	
 	
 
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public UsuarioModel insert(@RequestBody @Valid UsuarioInput usuarioInput) {
 		Usuario usuarioDomain = usuarioInputDIssb.inputToDomainObj(usuarioInput);

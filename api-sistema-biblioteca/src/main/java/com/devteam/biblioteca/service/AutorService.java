@@ -18,11 +18,14 @@ public class AutorService {
 	private AutorRepository autorRepository;
 	
 	
+	
+	
 	@Transactional
 	public Autor insert(Autor autor) {
 		autor.ativar();
 		return autorRepository.save(autor);
 	}
+	
 	
 	
 	@Transactional
@@ -38,18 +41,25 @@ public class AutorService {
 	}
 	
 	
+	
 	@Transactional
 	public void ativar(Autor autor) {
 		autor.ativar();
 	}
+	
+	
 	
 	@Transactional
 	public void desativar(Autor autor) {
 		autor.desativar();
 	}
 	
+	
+	
 	public Autor findOrFailById(Long id) {
 		return autorRepository.findById(id)
 				.orElseThrow(() -> new AutorNaoEncontradoException(id));
 	}
+	
+	
 }
