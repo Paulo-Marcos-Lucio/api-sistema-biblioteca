@@ -8,4 +8,5 @@ import com.devteam.biblioteca.domain.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
+	public Boolean existsByEmail(String email);
 }
