@@ -44,7 +44,6 @@ public class LivroController {
 	
 	
 	
-	
 	@GetMapping
 	public List<LivroModel> findAll() {
 		List<Livro> livrosDomain = livroRepository.findAll();
@@ -85,6 +84,8 @@ public class LivroController {
 			throw new NegocioException(ex.getMessage());
 		}
 	}
+	
+	
 	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
