@@ -1,11 +1,13 @@
 package com.devteam.biblioteca.service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devteam.biblioteca.domain.exception.EmprestimoNaoEncontradoException;
 import com.devteam.biblioteca.domain.exception.NegocioException;
 import com.devteam.biblioteca.domain.model.Emprestimo;
 import com.devteam.biblioteca.domain.model.ItemEmprestimo;
@@ -122,11 +124,33 @@ public class EmprestimoService {
     }
 
     
+    private List<Emprestimo> findAll() {
+    	return emprestimoRepository.findAll();
+    }
+    
+    
+    private List<Emprestimo> findAllEmprestimosAtivos() {
+    	return emprestimoRepository.findByAtivoTrue();
+    }
+    
+    
+    private List<Emprestimo> findAllEmprestimosByUsuarioId(Long usuarioId) {
+    	userServ.findOrFailById(usuarioId);
+    	return emprestimoRepository.findByUsuarioId(usuarioId);
+    }
+    
+    
+    public List<Emprestimo> findByUsuarioIdAtivos(Long usuarioId) {
+        userServ.findOrFailById(usuarioId);
+        return emprestimoRepository.findByUsuarioIdAndAtivoTrue(usuarioId);
+    }
     
     
     
-    
-    
+    public Emprestimo findOrFailById(Long id) {
+        return emprestimoRepository.findById(id)
+            .orElseThrow(() -> new EmprestimoNaoEncontradoException(id));
+    }
     
     
     
