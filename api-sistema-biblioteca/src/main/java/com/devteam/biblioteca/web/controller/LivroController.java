@@ -59,7 +59,7 @@ public class LivroController {
 	}
 	
 	
-	
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public LivroModel insert(@RequestBody @Valid LivroInput livroInput) {
 		try {
@@ -75,14 +75,18 @@ public class LivroController {
 
 	@PutMapping("/{id}")
 	public LivroModel update(@PathVariable Long id, @RequestBody @Valid LivroInput livroInput) {
-		try {
-			Livro livroDomain = livroService.findOrFailById(id);
-			livroInputDissb.copyInputToDomainProperties(livroInput, livroDomain);
-			return livroModelAssb.entityToModel(livroService.insert(livroDomain));
-		}
-		catch(AutorNaoEncontradoException ex) {
-			throw new NegocioException(ex.getMessage());
-		}
+	    try {
+	        // Apenas valida se existe, mas não usa o resultado
+	        livroService.findOrFailById(id);
+	        
+	        // Chama o service passando ID e Input separadamente
+	        Livro livroAtualizado = livroService.update(id, livroInput);
+	        
+	        return livroModelAssb.entityToModel(livroAtualizado);
+	        
+	    } catch(AutorNaoEncontradoException ex) {
+	        throw new NegocioException(ex.getMessage(), ex);
+	    }
 	}
 	
 	
@@ -93,18 +97,3 @@ public class LivroController {
 		livroService.delete(id);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,1 @@
+ALTER TABLE tbautor ADD COLUMN ativo BOOLEAN AFTER nome;

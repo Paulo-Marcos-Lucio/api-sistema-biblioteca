@@ -45,11 +45,14 @@ public class AutorController {
 	
 	
 	
+	
 	@GetMapping
 	public List<AutorModel> findAll() {
 		List<Autor> autoresDomain = autorRep.findAll();
 		return autorModelAssb.listEntityToListModel(autoresDomain);
 	}
+	
+	
 	
 	@GetMapping("/{id}")
 	public AutorModel findById(@PathVariable Long id) {
@@ -58,11 +61,15 @@ public class AutorController {
 	}
 	
 	
+	
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public AutorModel insert(@RequestBody @Valid AutorInput autorInput) {
 		Autor autorDomain = autorInputDissb.inputToDomainObj(autorInput);
 		return autorModelAssb.entityToModel(autorServ.insert(autorDomain));
 	}
+	
+	
 	
 	@PutMapping("/{id}")
 	public AutorModel update(@PathVariable Long id, @RequestBody @Valid AutorInput autorInput) {
@@ -76,13 +83,38 @@ public class AutorController {
 		}
 	}
 	
+	
+	
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
 		autorServ.delete(id);
 	}
+	
+	
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@PutMapping("/ativar/{id}")
+	public void ativar(@PathVariable Long id) {
+		autorServ.ativar(id);
+	}
+	
+	
+	
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/desativar/{id}")
+	public void desativar(@PathVariable Long id) {
+		autorServ.desativar(id);
+	}
+	
 
 }
+
+
+
+
+
+
 
 
 

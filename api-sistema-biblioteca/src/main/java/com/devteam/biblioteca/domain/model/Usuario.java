@@ -24,4 +24,6 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private String email;
+	
+	private Boolean ativo;
 }

@@ -38,8 +38,57 @@ public class Emprestimo {
 	@JoinColumn(name = "usuario_id", nullable = false)
 	private Usuario usuario;
 	
+	
 	@OneToMany(mappedBy = "emprestimo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemEmprestimo> itensEmprestimo = new ArrayList<>();
+	
+	
+	
+	public void ativar() {
+		this.ativo = true;
+	}
+	
+	
+	public void desativar() {
+		this.ativo = false;
+	}
+	
+	
+	public Boolean isAtivo() {
+		return Boolean.TRUE.equals(this.ativo);
+	}
+	
+	
+	public Boolean isInativo() {
+		return Boolean.FALSE.equals(this.ativo);
+	}
+	
+	
+	public void associarItemEmprestimo(ItemEmprestimo itemEmp) {
+		this.itensEmprestimo.add(itemEmp);
+		itemEmp.setEmprestimo(this);
+	}
+	
+	
+	public void desassociarItemEmprestimo(ItemEmprestimo itemEmp) {
+		this.itensEmprestimo.remove(itemEmp);
+		itemEmp.setEmprestimo(null);
+	}
+	
+	
+	
+	
+	public Integer calcularQuantidade() {
+		return itensEmprestimo.stream()
+				.mapToInt(ItemEmprestimo::getQuantidade)
+				.sum();
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 }
