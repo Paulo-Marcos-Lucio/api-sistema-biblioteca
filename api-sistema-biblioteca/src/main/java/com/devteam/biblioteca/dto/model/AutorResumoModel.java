@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class AutorResumoModel {
 
-	private Long id;
+	private String nome;
 }
