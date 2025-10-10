@@ -25,7 +25,7 @@ public class UsuarioModelAssembler {
 	public List<UsuarioModel> listEntityToListModel(List<Usuario> usuariosDomain) {
 		return usuariosDomain
 				.stream()
-				.map(usuarioDomain -> entityToModel(usuarioDomain))
+				.map(this::entityToModel)
 				.collect(Collectors.toList());
 	}
 }

@@ -25,7 +25,7 @@ public class EmprestimoService {
     private EmprestimoRepository emprestimoRepository;
     
     @Autowired
-    private ItemEmprestimoRepository itemEmprestimoRepository;
+    private ItemEmprestimoRepository itemEmpRep;
     
     @Autowired
     private LivroService livroServ;
@@ -97,7 +97,8 @@ public class EmprestimoService {
 		if (livrosIds.size() < emprestimo.getItensEmprestimo().size()) {
 			throw new NegocioException("Não é possível adicionar o mesmo livro mais de uma vez no empréstimo");
 		}
-
+		
+	
 		// ========== SALVAR ==========
 
 		// Salva o empréstimo (os itens são salvos automaticamente por causa do cascade)
@@ -122,19 +123,42 @@ public class EmprestimoService {
 		return emprestimoSalvo;
     	
     }
+    
+    
+    
+    @Transactional
+    public void finalizarEmprestimo(Long id) {
+        Emprestimo emprestimo = findOrFailById(id);
+        
+        if (!emprestimo.isAtivo()) {
+            throw new NegocioException("Este empréstimo já está finalizado");
+        }
+        
+        // Devolve os livros ao estoque
+        emprestimo.getItensEmprestimo().forEach(item -> {
+            Livro livro = item.getLivro();
+            livro.setEstoque(livro.getEstoque() + item.getQuantidade());
+            livroServ.insert(livro);
+        });
+        
+        // Inativa o empréstimo
+        emprestimo.desativar();
+        emprestimoRepository.save(emprestimo);
+    }
 
     
-    private List<Emprestimo> findAll() {
+    
+    public List<Emprestimo> findAll() {
     	return emprestimoRepository.findAll();
     }
     
     
-    private List<Emprestimo> findAllEmprestimosAtivos() {
+    public List<Emprestimo> findAllEmprestimosAtivos() {
     	return emprestimoRepository.findByAtivoTrue();
     }
     
     
-    private List<Emprestimo> findAllEmprestimosByUsuarioId(Long usuarioId) {
+    public List<Emprestimo> findAllEmprestimosByUsuarioId(Long usuarioId) {
     	userServ.findOrFailById(usuarioId);
     	return emprestimoRepository.findByUsuarioId(usuarioId);
     }

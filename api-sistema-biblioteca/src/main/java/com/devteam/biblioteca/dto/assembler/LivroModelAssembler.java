@@ -22,7 +22,7 @@ public class LivroModelAssembler {
 	
 	public List<LivroModel> listEntityToListModel(List<Livro> livrosDomain) {
 		return livrosDomain.stream()
-				.map(livroDomain -> entityToModel(livroDomain))
+				.map(this::entityToModel)
 				.collect(Collectors.toList());
 	}
 }

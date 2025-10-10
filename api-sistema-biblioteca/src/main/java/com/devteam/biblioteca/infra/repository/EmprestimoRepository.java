@@ -18,4 +18,6 @@ public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long>{
 	
 	//busca todos os empréstimos ativos de um usuário
 	List<Emprestimo> findByUsuarioIdAndAtivoTrue(Long id);
+	
+
 }

@@ -7,22 +7,24 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.devteam.biblioteca.domain.model.Autor;
-import com.devteam.biblioteca.dto.model.AutorModel;
+import com.devteam.biblioteca.domain.model.Emprestimo;
+import com.devteam.biblioteca.dto.model.EmprestimoModel;
 
 @Component
-public class AutorModelAssembler {
+public class EmprestimoModelAssembler {
 
 	@Autowired
 	private ModelMapper modelMapper;
 	
 	
-	public AutorModel entityToModel(Autor autor) {
-		return modelMapper.map(autor, AutorModel.class);
+	
+	public EmprestimoModel entityToModel(Emprestimo emp) {
+		return modelMapper.map(emp, EmprestimoModel.class);
 	}
 	
-	public List<AutorModel> listEntityToListModel(List<Autor> autoresDomain) {
-		return autoresDomain.stream()
+	
+	public List<EmprestimoModel> listEntityToListModel(List<Emprestimo> empsBd) {
+		return empsBd.stream()
 				.map(this::entityToModel)
 				.collect(Collectors.toList());
 	}
