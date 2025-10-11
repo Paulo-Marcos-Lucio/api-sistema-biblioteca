@@ -16,9 +16,5 @@ public class ItemEmprestimoInput {
 	
 	@Valid
 	@NotNull
-	private EmprestimoIdInput emprestimo;
-	
-	@Valid
-	@NotNull
 	private LivroIdInput livro;
 }

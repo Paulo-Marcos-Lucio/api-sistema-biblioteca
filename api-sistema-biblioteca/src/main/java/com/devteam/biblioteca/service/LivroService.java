@@ -26,6 +26,7 @@ public class LivroService {
 	
 	
 	
+	
 	@Transactional
 	public Livro insert(Livro livro) {
 		Long idAutor = livro.getAutor().getId();

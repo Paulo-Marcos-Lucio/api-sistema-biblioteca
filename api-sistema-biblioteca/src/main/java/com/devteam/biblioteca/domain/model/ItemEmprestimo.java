@@ -28,7 +28,7 @@ public class ItemEmprestimo {
 	private Integer quantidade;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "emprestimo_id", nullable = false)
+	@JoinColumn(name = "emprestimo_id")
 	@JsonBackReference
 	private Emprestimo emprestimo;
 	

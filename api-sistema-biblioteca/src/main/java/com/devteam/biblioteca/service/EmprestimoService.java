@@ -14,7 +14,6 @@ import com.devteam.biblioteca.domain.model.ItemEmprestimo;
 import com.devteam.biblioteca.domain.model.Livro;
 import com.devteam.biblioteca.domain.model.Usuario;
 import com.devteam.biblioteca.infra.repository.EmprestimoRepository;
-import com.devteam.biblioteca.infra.repository.ItemEmprestimoRepository;
 import com.devteam.biblioteca.infra.repository.LivroRepository;
 
 import jakarta.transaction.Transactional;
@@ -24,9 +23,6 @@ public class EmprestimoService {
 	
 	@Autowired
     private EmprestimoRepository emprestimoRepository;
-    
-    @Autowired
-    private ItemEmprestimoRepository itemEmpRep;
     
     @Autowired
     private LivroService livroServ;

@@ -5,15 +5,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.devteam.biblioteca.domain.model.ItemEmprestimo;
 import com.devteam.biblioteca.dto.model.ItemEmprestimoModel;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Component
 public class ItemEmprestimoModelAssembler {
 
 	@Autowired
