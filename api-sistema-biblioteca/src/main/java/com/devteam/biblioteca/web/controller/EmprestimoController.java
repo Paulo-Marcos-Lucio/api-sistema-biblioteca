@@ -38,11 +38,16 @@ public class EmprestimoController {
     @Autowired
     private EmprestimoModelAssembler emprestimoModelAssb;
     
+    
+    
+    
     @GetMapping
     public List<EmprestimoModel> findAll() {
-        List<Emprestimo> emprestimos = emprestimoService.findAll();
+        List<Emprestimo> emprestimos = emprestimoService.findAllEmprestimos();
         return emprestimoModelAssb.listEntityToListModel(emprestimos);
     }
+    
+    
     
     @GetMapping("/{id}")
     public EmprestimoModel findById(@PathVariable Long id) {
@@ -50,12 +55,18 @@ public class EmprestimoController {
         return emprestimoModelAssb.entityToModel(emprestimo);
     }
     
+    
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EmprestimoModel create(@RequestBody @Valid EmprestimoInput emprestimoInput) {
         try {
             Emprestimo emprestimo = emprestimoInputDissb.inputToDomainObj(emprestimoInput);
             Emprestimo emprestimoSalvo = emprestimoService.insert(emprestimo);
+            
+            // ✅ CRÍTICO: Recarrega o empréstimo do banco com os itens
+            emprestimoSalvo = emprestimoService.findByIdComItens(emprestimoSalvo.getId());
+            
             return emprestimoModelAssb.entityToModel(emprestimoSalvo);
             
         } catch (UsuarioNaoEncontradoException | LivroNaoEncontradoException ex) {
@@ -63,15 +74,31 @@ public class EmprestimoController {
         }
     }
     
+    
+    
     @PutMapping("/{id}/finalizar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void finalizarEmprestimo(@PathVariable Long id) {
         emprestimoService.finalizarEmprestimo(id);
     }
     
+    
+    
     @GetMapping("/usuario/{usuarioId}")
     public List<EmprestimoModel> findByUsuario(@PathVariable Long usuarioId) {
         List<Emprestimo> emprestimos = emprestimoService.findAllEmprestimosByUsuarioId(usuarioId);
+        return emprestimoModelAssb.listEntityToListModel(emprestimos);
+    }
+    
+    
+    
+    @GetMapping("/usuario/{usuarioId}/ativos")
+    public List<EmprestimoModel> findByUsuarioAtivos(@PathVariable Long usuarioId) {
+        List<Emprestimo> emprestimos = emprestimoService.findByUsuarioIdAtivos(usuarioId);
+        
+        // Força carregamento dos itens
+        emprestimos.forEach(e -> e.getItensEmprestimo().size());
+        
         return emprestimoModelAssb.listEntityToListModel(emprestimos);
     }
 }

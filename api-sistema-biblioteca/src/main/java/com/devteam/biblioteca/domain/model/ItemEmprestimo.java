@@ -1,5 +1,7 @@
 package com.devteam.biblioteca.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,6 +29,7 @@ public class ItemEmprestimo {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "emprestimo_id", nullable = false)
+	@JsonBackReference
 	private Emprestimo emprestimo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

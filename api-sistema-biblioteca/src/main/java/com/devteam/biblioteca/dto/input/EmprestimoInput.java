@@ -1,5 +1,6 @@
 package com.devteam.biblioteca.dto.input;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.validation.Valid;
@@ -17,5 +18,5 @@ public class EmprestimoInput {
 	
 	@Valid
 	@NotNull
-	private List<ItemEmprestimoIdInput> itensEmprestimo;
+	private List<ItemEmprestimoInput> itensEmprestimo = new ArrayList<>();
 }
